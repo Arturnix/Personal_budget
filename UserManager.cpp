@@ -13,7 +13,7 @@ void UserManager::userRegistration() {
 User UserManager::enterDataOfNewUser() {
     User user;
 
-    user.setId(getNewUserId());
+    user.setUserId(getNewUserId());
 
     do {
         cout << "Podaj login: ";
@@ -36,7 +36,7 @@ int UserManager::getNewUserId() {
     if (users.empty() == true)
         return 1;
     else
-        return users.back().getId() + 1;
+        return users.back().getUserId() + 1;
 }
 
 bool UserManager::doesLoginExist(string login) {
@@ -55,7 +55,7 @@ void UserManager::showAllUsers() {
         cout << "Wektor jest pusty. Brak danych do wyswietlenia!" << endl << endl;
     } else {
         for (int i = 0; i < (int)users.size(); i++) {
-            cout << "Id: " << users[i].getId() << endl;
+            cout << "Id: " << users[i].getUserId() << endl;
             cout << "Login: " << users[i].getLogin() << endl;
             cout << "Haslo: " << users[i].getPassword() << endl;
             cout << "Imie: " << users[i].getName() << endl;
@@ -79,7 +79,7 @@ void UserManager::userLogging() {
                 password = OtherMethods::getLine();
 
                 if (itr -> getPassword() == password) {
-                    loggedUserId = itr -> getId();
+                    loggedUserId = itr -> getUserId();
                     cout << endl << "Zalogowales sie." << endl << endl;
                     system("pause");
                     return;
@@ -109,7 +109,7 @@ bool UserManager::isUserLoggedIn() {
 }*/
 
 int UserManager::getLoggedUserId() {
-    return loggedUserId;
+    return UserManager::loggedUserId;
 }
 
 void UserManager::logoutUser() {
@@ -123,7 +123,7 @@ void UserManager::changePasswordOfLoggedUser() {
     newPassword = OtherMethods::getLine();
 
     for (vector <User>::iterator itr = users.begin(); itr != users.end(); itr++) {
-        if (itr -> getId() == getLoggedUserId()) {
+        if (itr -> getUserId() == getLoggedUserId()) {
             itr -> setPassword(newPassword);
             cout << "Haslo zostalo zmienione." << endl << endl;
             system("pause");

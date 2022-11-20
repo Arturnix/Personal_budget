@@ -15,7 +15,7 @@ void FileWithUsers::addUserToFile(User user) {
     xml.IntoElem();
     xml.AddElem("User");
     xml.IntoElem();
-    xml.AddElem("Id", user.getId());
+    xml.AddElem("UserId", user.getUserId());
     xml.AddElem("Login", user.getLogin());
     xml.AddElem("Password", user.getPassword());
     xml.AddElem("Name", user.getName());
@@ -25,7 +25,6 @@ void FileWithUsers::addUserToFile(User user) {
 }
 
 vector<User> FileWithUsers::loadUsersFromFile() {
-
 
     User user;
     vector<User> users;
@@ -38,8 +37,8 @@ vector<User> FileWithUsers::loadUsersFromFile() {
     xml.IntoElem(); // inside OPERATIONS
     while ( xml.FindElem("User") ) {
         xml.IntoElem();
-        xml.FindElem("Id");
-        user.setId(atoi(MCD_2PCSZ(xml.GetData())));
+        xml.FindElem("UserId");
+        user.setUserId(atoi(MCD_2PCSZ(xml.GetData())));
         xml.FindElem("Login");
         user.setLogin(xml.GetData());
         xml.FindElem("Password");
@@ -93,7 +92,7 @@ void FileWithUsers::updateFileWithUsersAfterPasswordChange(vector<User>& users) 
     for (vector <User>::iterator itr = users.begin(); itr != users.end(); itr++) {
         xml.AddElem("User");
         xml.IntoElem();
-        xml.AddElem("Id", itr -> getId());
+        xml.AddElem("UserId", itr -> getUserId());
         xml.AddElem("Login", itr -> getLogin());
         xml.AddElem("Password", itr -> getPassword());
         xml.AddElem("Name", itr -> getName());

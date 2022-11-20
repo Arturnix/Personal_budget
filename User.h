@@ -7,20 +7,20 @@ using namespace std;
 
 class User {
 
-    int id;
+    int userId;
     string login;
     string password;
     string name;
     string surname;
 
 public:
-    void setId (int newId);
+    void setUserId (int newUserId);
     void setLogin (string newLogin);
     void setPassword (string newPassword);
     void setName (string newName);
     void setSurname (string newSurname);
 
-    int getId ();
+    int getUserId ();
     string getLogin();
     string getPassword();
     string getName();

@@ -1,22 +1,33 @@
 #include <iostream>
+#include <cstdlib>
+
 #include "UserManager.h"
 #include "OtherMethods.h"
+#include "IncomeManager.h"
+#include "ExpenseManager.h"
+#include "Date.h"
 
 using namespace std;
 
 int main()
 {
-    UserManager user1("users.xml");
+    UserManager user("users.xml");
+    IncomeManager* income;
+    ExpenseManager* expense;
 
     while (true) {
-        if (!user1.isUserLoggedIn()) {
+        if (!user.isUserLoggedIn()) {
 
             switch (OtherMethods::choseFromMainMenu()) {
             case '1':
-                user1.userRegistration();
+                user.userRegistration();
                 break;
             case '2':
-                user1.userLogging();
+                user.userLogging();
+                if (user.isUserLoggedIn()) {
+                    income = new IncomeManager ("incomes.xml", user.getLoggedUserId());
+                    expense = new ExpenseManager ("expenses.xml", user.getLoggedUserId()); //doopisac dla expense + nowy obiekt new
+                }
                 break;
             case '3':
                 exit(0);
@@ -30,13 +41,15 @@ int main()
 
             switch (OtherMethods::choseFromUserMenu()) {
             case '1':
-
+                income -> addIncome();
                 break;
             case '2':
-
+                expense -> addExpense();
                 break;
             case '3':
-
+                income -> showAllIncomes();
+                expense -> showAllExpenses();
+                Sleep(6000);
                 break;
             case '4':
 
@@ -45,10 +58,10 @@ int main()
 
                 break;
             case '6':
-                user1.changePasswordOfLoggedUser();
+                user.changePasswordOfLoggedUser();
                 break;
             case '7':
-                user1.logoutUser();
+                user.logoutUser();
                 break;
             }
         }

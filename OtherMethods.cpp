@@ -29,7 +29,7 @@ int OtherMethods::convertStringToInt(string strNumber) {
     return intNumber;
 }
 
-string OtherMethods::getNumber(string text, int charPosition) {
+string OtherMethods::getNumberFromString(string text, int charPosition) {
     string strNumber = "";
     while(isdigit(text[charPosition]) == true) {
         strNumber += text[charPosition];
@@ -92,13 +92,12 @@ char OtherMethods::getCharacter() {
     return character;
 }
 
-int OtherMethods::getInteger()
-{
+int OtherMethods::getInteger() {
+
     string inputString = "";
     int intNumber = 0;
 
-    while (true)
-    {
+    while (true) {
         getline(cin, inputString);
 
         stringstream myStream(inputString);
@@ -107,4 +106,61 @@ int OtherMethods::getInteger()
         cout << "To nie jest liczba. Wpisz ponownie. " << endl;
     }
     return intNumber;
+}
+
+float OtherMethods::getFloat() {
+
+    string inputString = "";
+    float floatNumber = 0.00;
+
+    while (true) {
+        getline(cin, inputString);
+
+        stringstream myStream(inputString);
+        if (myStream >> floatNumber)
+            break;
+        cout << "To nie jest liczba. Wpisz ponownie. " << endl;
+    }
+    return floatNumber;
+}
+
+float OtherMethods::getFloatNumberForCashAmount() {
+
+    float floatNumber = 0.00;
+    string stringNumber = "";
+
+    floatNumber = getFloat();
+
+    stringNumber = convertFloatToString(floatNumber);
+    stringNumber = changeCommaToDot(stringNumber);
+    floatNumber = convertStringToFloat (stringNumber);
+
+    return floatNumber;
+}
+
+string OtherMethods::changeCommaToDot (string stringNumber) {
+
+    for (int i = 0; i < (int)stringNumber.length(); i++) {
+        if (stringNumber[i] == ',') {
+            stringNumber[i] = '.';
+        }
+    }
+
+    return stringNumber;
+}
+
+float OtherMethods::convertStringToFloat(string stringNumber) {
+
+    float floatNumber;
+    istringstream iss(stringNumber);
+    iss >> floatNumber;
+
+    return floatNumber;
+}
+
+string OtherMethods::convertFloatToString(float floatNumber) {
+    ostringstream ss;
+    ss << floatNumber;
+    string str = ss.str();
+    return str;
 }

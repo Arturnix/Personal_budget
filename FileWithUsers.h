@@ -2,7 +2,7 @@
 #define FILEWITHUSERS_H
 
 #include <iostream>
-#include <fstream>
+//#include <fstream>
 #include <vector>
 
 #include "User.h"
@@ -13,8 +13,6 @@
 using namespace std;
 
 class FileWithUsers : public DataFile {
-
-    User getUserData(string oneUserDataSeparatedbyVerticalBars);
 
 public:
     FileWithUsers(string fileName) : DataFile(fileName) {};

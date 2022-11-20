@@ -1,8 +1,8 @@
 #include "User.h"
 
-void User::setId (int newId) {
-    if (newId >= 0) {
-        id = newId;
+void User::setUserId (int newUserId) {
+    if (newUserId >= 0) {
+        userId = newUserId;
     }
 }
 
@@ -22,8 +22,8 @@ void User::setSurname (string newSurname) {
     surname = newSurname;
 }
 
-int User::getId() {
-    return id;
+int User::getUserId() {
+    return userId;
 }
 
 string User::getLogin() {
