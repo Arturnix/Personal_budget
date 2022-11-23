@@ -45,24 +45,6 @@ int Date::getCurrentMonth () {
     return currentMonth;
 }
 
-/*int Date::getCurrentDay () {
-
-    time_t rawtime;
-    struct tm * timeinfo;
-
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-
-    int currentDay = timeinfo->tm_mday;
-
-    return currentDay;
-}
-
-void Date::showCurrentDate () {
-
-    cout << getCurrentDate() << endl;
-}
-
 int Date::getPreviousMonth () {
 
     time_t rawtime;
@@ -75,25 +57,6 @@ int Date::getPreviousMonth () {
 
     return previousMonth;
 }
-
-string Date::getFullDatePreviousMonth () {
-
-    time_t rawtime;
-    struct tm * timeinfo;
-
-    string fullDatePreviousMonth = "";
-
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-
-    int day = timeinfo->tm_mday;
-    int month = timeinfo->tm_mon;
-    int year = timeinfo->tm_year + 1900;
-
-    fullDatePreviousMonth = to_string(year) + "-" + to_string(month) + "-" + to_string(day);
-
-    return fullDatePreviousMonth;
-}*/
 
 bool Date::isLeapYear (int year) {
 
@@ -131,15 +94,6 @@ string Date::getYearFromInputDate (string date) {
     return yearFromInputDate;
 }
 
-/*void Date::compareYears (string date1, string date2) {
-
-    if (getYearFromInputDate(date1) > getYearFromInputDate(date2)) {
-        cout << "Data 1 jest wczesniejsza niz data 2" << endl;
-    } else {
-        cout << "Data 2 jest wczesniejsza niz data 1" << endl;
-    }
-}*/
-
 string Date::getMonthFromInputDate (string date) {
 
     string monthFromInputDate = "";
@@ -150,15 +104,6 @@ string Date::getMonthFromInputDate (string date) {
     }
     return monthFromInputDate;
 }
-
-/*void Date::compareMonths (string date1, string date2) {
-
-    if (getMonthFromInputDate(date1) > getMonthFromInputDate(date2)) {
-        cout << "Data 1 jest wczesniejsza niz data 2" << endl;
-    } else {
-        cout << "Data 2 jest wczesniejsza niz data 1" << endl;
-    }
-}*/
 
 string Date::getDayFromInputDate (string date) {
 
@@ -171,39 +116,6 @@ string Date::getDayFromInputDate (string date) {
     }
     return dayFromInputDate;
 }
-
-/*void Date::compareDays (string date1, string date2) {
-
-    if (getDayFromInputDate(date1) > getDayFromInputDate(date2)) {
-        cout << "Data 1 jest wczesniejsza niz data 2" << endl;
-    } else {
-        cout << "Data 2 jest wczesniejsza niz data 1" << endl;
-    }
-}
-
-void Date::compareDates() {
-
-    string date1 = "", date2 = "";
-
-    cout << "Podaj pierwsza date do porownania rrrr-mm-dd: ";
-    date1 = getLine();
-
-    cout << "Podaj druga date do porownania rrrr-mm-dd: ";
-    date2 = getLine();
-
-    if (getYearFromInputDate(date1) != getYearFromInputDate(date2)) {
-
-        compareYears(date1, date2);
-    } else if (getMonthFromInputDate(date1) != getMonthFromInputDate(date2)) {
-
-        compareMonths(date1, date2);
-    } else if (getDayFromInputDate(date1) != getDayFromInputDate(date2)) {
-
-        compareDays(date1, date2);
-    } else {
-        cout << "Podane daty sa takie same" << endl;
-    }
-}*/
 
 bool Date::isYearCorrect(string userDate) {
 
@@ -279,28 +191,101 @@ string Date::inputDate () {
     }
 }
 
-/*int Date::convertStringDateToIntDate (string stringDateWithSeparators) {
+string Date::inputDateForTimePeroid () {
+
+    string userDate = OtherMethods::getLine();
+
+    if (Date::isDateCorrect(userDate)) {
+        return userDate;
+    } else {
+        do {
+            cout << "Podaj poprawna date: ";
+            userDate = OtherMethods::getLine();
+        } while (!Date::isDateCorrect(userDate));
+        return userDate;
+    }
+}
+
+int Date::intDateWithoutSeparators (string stringDateWithSeparators) {
 
     string stringDateWithoutSeparators = "";
-    int intDate = 0;
+    int intDateWithoutSeparators = 0;
 
-    stringDateWithoutSeparators = OtherMethods::convertIntToString(getYearFromInputDate(stringDateWithSeparators));
-    stringDateWithoutSeparators += OtherMethods::convertIntToString(getMonthFromInputDate(stringDateWithSeparators));
-    stringDateWithoutSeparators += OtherMethods::convertIntToString(getDayFromInputDate(stringDateWithSeparators));
+    stringDateWithoutSeparators = stringDateWithSeparators.erase(4,1);
+    stringDateWithoutSeparators = stringDateWithSeparators.erase(6,1);
 
-    cout << stringDateWithoutSeparators << endl;
+    intDateWithoutSeparators = atoi(stringDateWithoutSeparators.c_str());
 
-}*/
+    return intDateWithoutSeparators;
+}
 
-string Date::stringDateWithoutSeparators (string stringDateWithSeparators) {
+string Date::stringDateWithSeparators (int intDateWithoutSeparators) {
 
-    string stringDateWithoutSeparators = "";
+    string stringDateWithoutSeparators = OtherMethods::convertIntToString(intDateWithoutSeparators);
+    string stringDateWithSeparators = "";
 
-    stringDateWithoutSeparators = getYearFromInputDate(stringDateWithSeparators)
-    + getMonthFromInputDate(stringDateWithSeparators)
-    + getDayFromInputDate(stringDateWithSeparators);
-    //stringDateWithoutSeparators += getMonthFromInputDate(stringDateWithSeparators);
-    //stringDateWithoutSeparators += getDayFromInputDate(stringDateWithSeparators);
+    stringDateWithSeparators = (stringDateWithoutSeparators.insert(4, "-"));
+    stringDateWithSeparators = (stringDateWithoutSeparators.insert(7, "-"));
 
-    return stringDateWithoutSeparators;
+    return stringDateWithSeparators;
+}
+
+bool Date::dateValidationForCurrentMonthFinancialBalance (string userDate) {
+
+    string userDateToValidate = getYearFromInputDate(userDate);
+    userDateToValidate += getMonthFromInputDate(userDate);
+
+    string currentMonthDateToValidate = OtherMethods::convertIntToString(getCurrentYear());
+    currentMonthDateToValidate += OtherMethods::convertIntToString(getCurrentMonth());
+
+    if (userDateToValidate == currentMonthDateToValidate) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Date::dateValidationForPreviousMonthFinancialBalance (string userDate) {
+
+    string userDateToValidate = getYearFromInputDate(userDate);
+    userDateToValidate += getMonthFromInputDate(userDate);
+
+    string previousMonthDateToValidate = OtherMethods::convertIntToString(getCurrentYear());
+    previousMonthDateToValidate += OtherMethods::convertIntToString(getPreviousMonth());
+
+    if (userDateToValidate == previousMonthDateToValidate) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Date::startDateValidationForTimePeroidFinancialBalance (string dateStart, int dateFromVector) {
+
+    string stringUserDateToValidateStart = getYearFromInputDate(dateStart);
+    stringUserDateToValidateStart += getMonthFromInputDate(dateStart);
+    stringUserDateToValidateStart += getDayFromInputDate(dateStart);
+
+    int intUserDateToValidateStart = atoi(stringUserDateToValidateStart.c_str());
+
+    if (dateFromVector >= intUserDateToValidateStart) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Date::endDateValidationForTimePeroidFinancialBalance (string dateEnd, int dateFromVector) {
+
+    string stringUserDateToValidateEnd = getYearFromInputDate(dateEnd);
+    stringUserDateToValidateEnd += getMonthFromInputDate(dateEnd);
+    stringUserDateToValidateEnd += getDayFromInputDate(dateEnd);
+
+    int intUserDateToValidateEnd = atoi(stringUserDateToValidateEnd.c_str());
+
+    if (dateFromVector <= intUserDateToValidateEnd) {
+        return true;
+    } else {
+        return false;
+    }
 }

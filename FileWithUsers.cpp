@@ -33,8 +33,8 @@ vector<User> FileWithUsers::loadUsersFromFile() {
 
     xml.Load( "users.xml" );
 
-    xml.FindElem(); // root OPERATIONS element
-    xml.IntoElem(); // inside OPERATIONS
+    xml.FindElem();
+    xml.IntoElem();
     while ( xml.FindElem("User") ) {
         xml.IntoElem();
         xml.FindElem("UserId");
@@ -54,33 +54,6 @@ vector<User> FileWithUsers::loadUsersFromFile() {
     return users;
 }
 
-/*Uzytkownik PlikZUzytkownikami::pobierzDaneUzytkownika(string daneJednegoUzytkownikaOddzielonePionowymiKreskami) {
-    Uzytkownik uzytkownik;
-    string pojedynczaDanaUzytkownika = "";
-    int numerPojedynczejDanejUzytkownika = 1;
-
-    for (int pozycjaZnaku = 0; pozycjaZnaku < (int)daneJednegoUzytkownikaOddzielonePionowymiKreskami.length(); pozycjaZnaku++) {
-        if (daneJednegoUzytkownikaOddzielonePionowymiKreskami[pozycjaZnaku] != '|') {
-            pojedynczaDanaUzytkownika += daneJednegoUzytkownikaOddzielonePionowymiKreskami[pozycjaZnaku];
-        } else {
-            switch(numerPojedynczejDanejUzytkownika) {
-            case 1:
-                uzytkownik.ustawId(atoi(pojedynczaDanaUzytkownika.c_str()));
-                break;
-            case 2:
-                uzytkownik.ustawLogin(pojedynczaDanaUzytkownika);
-                break;
-            case 3:
-                uzytkownik.ustawHaslo(pojedynczaDanaUzytkownika);
-                break;
-            }
-            pojedynczaDanaUzytkownika = "";
-            numerPojedynczejDanejUzytkownika++;
-        }
-    }
-    return uzytkownik;
-}*/
-
 void FileWithUsers::updateFileWithUsersAfterPasswordChange(vector<User>& users) {
 
     CMarkup xml;
@@ -98,6 +71,5 @@ void FileWithUsers::updateFileWithUsersAfterPasswordChange(vector<User>& users) 
         xml.AddElem("Name", itr -> getName());
         xml.AddElem("Surname", itr -> getSurname());
     }
-
     xml.Save("users.xml");
 }

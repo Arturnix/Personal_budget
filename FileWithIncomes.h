@@ -8,6 +8,7 @@
 #include "Income.h"
 #include "Markup.h"
 #include "OtherMethods.h"
+#include "Date.h"
 
 using namespace std;
 
@@ -16,8 +17,7 @@ class FileWithIncomes : public DataFile {
 public:
     FileWithIncomes (string fileName) : DataFile (fileName) {};
     void addIncomeToFile (Income income);
-    vector<Income> loadIncomesFromFile ();
-    void saveAllIncomesInFile ();
+    vector<Income> loadIncomesFromFile (int loggedUserId);
 };
 
 #endif // FILEWITHINCOMES_H

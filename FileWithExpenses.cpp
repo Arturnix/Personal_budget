@@ -2,7 +2,7 @@
 
 void FileWithExpenses::addExpenseToFile (Expense expense) {
 
-CMarkup xml;
+    CMarkup xml;
 
     bool fileExists = xml.Load( "expenses.xml" );
 
@@ -19,37 +19,40 @@ CMarkup xml;
     xml.AddElem("UserId", expense.getUserId());
     xml.AddElem("Date", expense.getDate());
     xml.AddElem("Item", expense.getItem());
-    xml.AddElem("Amount", OtherMethods::convertFloatToString(expense.getAmount())); // zmienic niech float prosto laduje
+    xml.AddElem("Amount", OtherMethods::convertFloatToString(expense.getAmount()));
 
     xml.Save("expenses.xml");
 }
 
-vector<Expense> FileWithExpenses::loadExpensesFromFile() {
+vector<Expense> FileWithExpenses::loadExpensesFromFile(int loggedUserId) {
 
-Expense expense;
+    Expense expense;
     vector<Expense> expenses;
 
     CMarkup xml;
 
     xml.Load( "expenses.xml" );
 
-    xml.FindElem(); // root OPERATIONS element
-    xml.IntoElem(); // inside OPERATIONS
+    xml.FindElem();
+    xml.IntoElem();
     while ( xml.FindElem("Expense") ) {
         xml.IntoElem();
         xml.FindElem("ExpenseId");
         expense.setExpenseId(atoi(MCD_2PCSZ(xml.GetData())));
         xml.FindElem("UserId");
         expense.setUserId(atoi(MCD_2PCSZ(xml.GetData())));
-        xml.FindElem("Date");
-        expense.setDate(xml.GetData());
-        xml.FindElem("Item");
-        expense.setItem(xml.GetData());
-        xml.FindElem("Amount");
-        expense.setAmount(OtherMethods::convertStringToFloat(xml.GetData()));
-        xml.OutOfElem();
+        if (expense.getUserId() == loggedUserId) {
+            xml.FindElem("Date");
+            string stringDateWithoutSeparators = xml.GetData();
+            expense.setDate(Date::intDateWithoutSeparators(stringDateWithoutSeparators));
+            xml.FindElem("Item");
+            expense.setItem(xml.GetData());
+            xml.FindElem("Amount");
+            expense.setAmount(OtherMethods::convertStringToFloat(xml.GetData()));
 
-        expenses.push_back(expense);
+            expenses.push_back(expense);
+        }
+        xml.OutOfElem();
     }
     return expenses;
 }

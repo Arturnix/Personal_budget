@@ -2,7 +2,7 @@
 
 void FileWithIncomes::addIncomeToFile (Income income) {
 
-CMarkup xml;
+    CMarkup xml;
 
     bool fileExists = xml.Load( "incomes.xml" );
 
@@ -17,39 +17,42 @@ CMarkup xml;
     xml.IntoElem();
     xml.AddElem("IncomeId", income.getIncomeId());
     xml.AddElem("UserId", income.getUserId());
-    xml.AddElem("Date", income.getDate());
+    xml.AddElem("Date", Date::stringDateWithSeparators(income.getDate()));
     xml.AddElem("Item", income.getItem());
-    xml.AddElem("Amount", OtherMethods::convertFloatToString(income.getAmount())); // zmienic niech float prosto laduje
+    xml.AddElem("Amount", OtherMethods::convertFloatToString(income.getAmount()));
 
     xml.Save("incomes.xml");
 }
 
-vector<Income> FileWithIncomes::loadIncomesFromFile() {
+vector<Income> FileWithIncomes::loadIncomesFromFile(int loggedUserId) {
 
-Income income;
+    Income income;
     vector<Income> incomes;
 
     CMarkup xml;
 
     xml.Load( "incomes.xml" );
 
-    xml.FindElem(); // root OPERATIONS element
-    xml.IntoElem(); // inside OPERATIONS
+    xml.FindElem();
+    xml.IntoElem();
     while ( xml.FindElem("Income") ) {
         xml.IntoElem();
         xml.FindElem("IncomeId");
         income.setIncomeId(atoi(MCD_2PCSZ(xml.GetData())));
         xml.FindElem("UserId");
         income.setUserId(atoi(MCD_2PCSZ(xml.GetData())));
-        xml.FindElem("Date");
-        income.setDate(xml.GetData());
-        xml.FindElem("Item");
-        income.setItem(xml.GetData());
-        xml.FindElem("Amount");
-        income.setAmount(OtherMethods::convertStringToFloat(xml.GetData()));
-        xml.OutOfElem();
+        if (income.getUserId() == loggedUserId) {
+            xml.FindElem("Date");
+            string stringDateWithoutSeparators = xml.GetData();
+            income.setDate(Date::intDateWithoutSeparators(stringDateWithoutSeparators));
+            xml.FindElem("Item");
+            income.setItem(xml.GetData());
+            xml.FindElem("Amount");
+            income.setAmount(OtherMethods::convertStringToFloat(xml.GetData()));
 
-        incomes.push_back(income);
+            incomes.push_back(income);
+        }
+        xml.OutOfElem();
     }
     return incomes;
 }

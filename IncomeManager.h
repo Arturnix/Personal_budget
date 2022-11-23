@@ -3,31 +3,42 @@
 
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 #include "Income.h"
 #include "FileWithIncomes.h"
 #include "OtherMethods.h"
 #include "Date.h"
-#include "UserManager.h"
 
 using namespace std;
 
 class IncomeManager {
 
     vector<Income> incomes;
-    Income enterDataOfNewIncome();
     FileWithIncomes fileWithIncomes;
     const int LOGGED_USER_ID;
+
+    Income enterDataOfNewIncome();
+    int getNewIncomeId ();
+    vector<Income> sortVectorByDate (vector<Income>& incomes);
+    void displayIncomesTitle ();
+    void showIncomeDetails (Income income);
+    float totalIncomesOfLoggedUserCurrentMonth ();
+    float totalIncomesOfLoggedUserPreviousMonth ();
+    float totalIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
+    void showAllIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
+
 
 public:
     IncomeManager (string fileName, int loggedUserId)
     : fileWithIncomes(fileName), LOGGED_USER_ID(loggedUserId) {
-    incomes = fileWithIncomes.loadIncomesFromFile();
+    incomes = fileWithIncomes.loadIncomesFromFile(loggedUserId);
     };
 
     void addIncome ();
-    int getNewIncomeId ();
-    void showAllIncomes ();
+    void showAllIncomesOfLoggedUserCurrentMonth();
+    void showAllIncomesOfLoggedUserPreviousMonth();
+    void setTimePeroidToShowFinancialBalance ();
 };
 
 #endif // INCOMEMANAGER_H

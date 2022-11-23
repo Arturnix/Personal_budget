@@ -19,7 +19,7 @@ Income IncomeManager::enterDataOfNewIncome () {
     income.setUserId(LOGGED_USER_ID);
 
     cout << "Podaj date przychodu. " << endl;
-    income.setDate(Date::inputDate());
+    income.setDate(Date::intDateWithoutSeparators(Date::inputDate()));
 
     cout << "Podaj kategorie przychodu: ";
     income.setItem(OtherMethods::getLine());
@@ -37,23 +37,115 @@ int IncomeManager::getNewIncomeId() {
         return incomes.back().getIncomeId() + 1;
 }
 
-void IncomeManager::showAllIncomes() {
+vector<Income> IncomeManager::sortVectorByDate (vector<Income>& incomes) {
 
-system("cls");
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-cout << "Przychody: " << endl;
-cout << "---------------------------------------" << endl;
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+    sort(incomes.begin(), incomes.end(), [](Income& lhs, Income& rhs) {
+        return lhs.getDate() < rhs.getDate();
+    });
+    return incomes;
+}
 
- if (incomes.size() == 0) {
-        cout << "Wektor jest pusty. Brak danych do wyswietlenia!" << endl << endl;
-    } else {
-        for (int i = 0; i < (int)incomes.size(); i++) {
-            cout << "IncomeId: " << incomes[i].getIncomeId() << endl;
-            cout << "UserId: " << incomes[i].getUserId() << endl;
-            cout << "Date: " << incomes[i].getDate() << endl;
-            cout << "Item: " << incomes[i].getItem() << endl;
-            cout << "Amount: " << incomes[i].getAmount() << endl << endl;
+void IncomeManager::displayIncomesTitle () {
+    system("cls");
+    cout << "Przychody: " << endl;
+    cout << "---------------------------------------" << endl;
+}
+
+void IncomeManager::showIncomeDetails (Income income) {
+    cout << "Numer przychodu: " << income.getIncomeId() << endl;
+    cout << "Data przychodu: " << Date::stringDateWithSeparators(income.getDate()) << endl;
+    cout << "Zrodlo przychodu: " << income.getItem() << endl;
+    cout << "Kwota przychodu: " << income.getAmount() << " zl\n\n";
+}
+
+float IncomeManager::totalIncomesOfLoggedUserCurrentMonth () {
+    float totalIncomes = 0.00;
+
+    for (vector<Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++) {
+        if(Date::dateValidationForCurrentMonthFinancialBalance(Date::stringDateWithSeparators(itr -> getDate()))) {
+            totalIncomes += itr -> getAmount();
         }
+    }
+    return totalIncomes;
+}
+
+void IncomeManager::showAllIncomesOfLoggedUserCurrentMonth() {
+    displayIncomesTitle();
+    if (incomes.size() == 0) {
+        cout << "Brak przychodow do wyswietlenia!" << "\n\n";
+    } else {
+        sortVectorByDate (incomes);
+        for (vector<Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++) {
+            if (Date::dateValidationForCurrentMonthFinancialBalance(Date::stringDateWithSeparators(itr -> getDate()))) {
+                showIncomeDetails(*itr);
+            }
+        }
+        cout << "Calkowity przychod w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserCurrentMonth() << " zl\n\n";
+    }
+}
+
+float IncomeManager::totalIncomesOfLoggedUserPreviousMonth () {
+    float totalIncomes = 0.00;
+
+    for (vector<Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++) {
+        if(Date::dateValidationForPreviousMonthFinancialBalance(Date::stringDateWithSeparators( itr -> getDate()))) {
+            totalIncomes +=  itr -> getAmount();
+        }
+    }
+    return totalIncomes;
+}
+
+void IncomeManager::showAllIncomesOfLoggedUserPreviousMonth() {
+    displayIncomesTitle();
+    if (incomes.size() == 0) {
+        cout << "Brak przychodow do wyswietlenia!" << "\n\n";
+    } else {
+        sortVectorByDate (incomes);
+        for (vector<Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++) {
+            if (Date::dateValidationForPreviousMonthFinancialBalance(Date::stringDateWithSeparators(itr -> getDate()))) {
+                showIncomeDetails(*itr);
+            }
+        }
+        cout << "Calkowity przychod w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserPreviousMonth() << " zl\n\n";
+    }
+}
+
+void IncomeManager::setTimePeroidToShowFinancialBalance () {
+    string dateStart = "",  dateEnd = "";
+
+    cout << "Podaj poczatek okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
+    dateStart = Date::inputDateForTimePeroid();
+
+    cout << "Podaj koniec okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
+    dateEnd = Date::inputDateForTimePeroid();
+
+    showAllIncomesOfLoggedUserTimePeroid(dateStart, dateEnd);
+}
+
+float IncomeManager::totalIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd) {
+    float totalIncomes = 0.00;
+
+    for (vector<Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++) {
+        if(Date::startDateValidationForTimePeroidFinancialBalance(dateStart, itr -> getDate())
+                && Date::endDateValidationForTimePeroidFinancialBalance(dateEnd, itr -> getDate())) {
+            totalIncomes += itr -> getAmount();
+        }
+    }
+    return totalIncomes;
+}
+
+void IncomeManager::showAllIncomesOfLoggedUserTimePeroid(string dateStart, string dateEnd) {
+    displayIncomesTitle();
+    if (incomes.size() == 0) {
+        cout << "Brak przychodow do wyswietlenia!" << "\n\n";
+    } else {
+        sortVectorByDate (incomes);
+        for (vector<Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++) {
+            if (Date::startDateValidationForTimePeroidFinancialBalance(dateStart, itr -> getDate())
+                    && Date::endDateValidationForTimePeroidFinancialBalance(dateEnd, itr -> getDate())) {
+                showIncomeDetails(*itr);
+            }
+        }
+        cout << "Calkowity przychod w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserTimePeroid(dateStart, dateEnd) << " zl\n\n";
     }
 }

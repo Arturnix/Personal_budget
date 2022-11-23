@@ -2,7 +2,6 @@
 #define FILEWITHUSERS_H
 
 #include <iostream>
-//#include <fstream>
 #include <vector>
 
 #include "User.h"

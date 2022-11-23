@@ -49,21 +49,6 @@ bool UserManager::doesLoginExist(string login) {
     return false;
 }
 
-void UserManager::showAllUsers() {
-
-    if (users.size() == 0) {
-        cout << "Wektor jest pusty. Brak danych do wyswietlenia!" << endl << endl;
-    } else {
-        for (int i = 0; i < (int)users.size(); i++) {
-            cout << "Id: " << users[i].getUserId() << endl;
-            cout << "Login: " << users[i].getLogin() << endl;
-            cout << "Haslo: " << users[i].getPassword() << endl;
-            cout << "Imie: " << users[i].getName() << endl;
-            cout << "Nazwisko: " << users[i].getSurname() << endl << endl;
-        }
-    }
-}
-
 void UserManager::userLogging() {
     User user;
     string login = "", password = "";
@@ -103,10 +88,6 @@ bool UserManager::isUserLoggedIn() {
         return false;
     }
 }
-
-/*void UzytkownikMenedzer::ustawIdZalogowanegoUzytkownika (int noweId) {
-    idZalogowanegoUzytkownika = noweId;
-}*/
 
 int UserManager::getLoggedUserId() {
     return UserManager::loggedUserId;

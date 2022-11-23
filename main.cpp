@@ -26,7 +26,7 @@ int main()
                 user.userLogging();
                 if (user.isUserLoggedIn()) {
                     income = new IncomeManager ("incomes.xml", user.getLoggedUserId());
-                    expense = new ExpenseManager ("expenses.xml", user.getLoggedUserId()); //doopisac dla expense + nowy obiekt new
+                    expense = new ExpenseManager ("expenses.xml", user.getLoggedUserId());
                 }
                 break;
             case '3':
@@ -47,15 +47,16 @@ int main()
                 expense -> addExpense();
                 break;
             case '3':
-                income -> showAllIncomes();
-                expense -> showAllExpenses();
-                Sleep(6000);
+                income -> showAllIncomesOfLoggedUserCurrentMonth();
+                system("pause");
                 break;
             case '4':
-
+                income -> showAllIncomesOfLoggedUserPreviousMonth();
+                system("pause");
                 break;
             case '5':
-
+                income -> setTimePeroidToShowFinancialBalance();
+                system("pause");
                 break;
             case '6':
                 user.changePasswordOfLoggedUser();

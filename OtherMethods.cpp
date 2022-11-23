@@ -108,7 +108,7 @@ int OtherMethods::getInteger() {
     return intNumber;
 }
 
-float OtherMethods::getFloat() {
+float OtherMethods::getFloatNumberForCashAmount() {
 
     string inputString = "";
     float floatNumber = 0.00;
@@ -116,24 +116,12 @@ float OtherMethods::getFloat() {
     while (true) {
         getline(cin, inputString);
 
+        inputString = changeCommaToDot(inputString);
         stringstream myStream(inputString);
         if (myStream >> floatNumber)
             break;
         cout << "To nie jest liczba. Wpisz ponownie. " << endl;
     }
-    return floatNumber;
-}
-
-float OtherMethods::getFloatNumberForCashAmount() {
-
-    float floatNumber = 0.00;
-    string stringNumber = "";
-
-    floatNumber = getFloat();
-
-    stringNumber = convertFloatToString(floatNumber);
-    stringNumber = changeCommaToDot(stringNumber);
-    floatNumber = convertStringToFloat (stringNumber);
 
     return floatNumber;
 }
