@@ -46,7 +46,6 @@ vector<Expense> ExpenseManager::sortVectorByDate (vector<Expense>& expenses) {
 }
 
 void ExpenseManager::displayExpensesTitle () {
-    system("cls");
     cout << "Wydatki: " << endl;
     cout << "---------------------------------------" << endl;
 }
@@ -80,7 +79,7 @@ void ExpenseManager::showAllExpensesOfLoggedUserCurrentMonth() {
                 showExpenseDetails(*itr);
             }
         }
-        cout << "Calkowita wysokosc wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserCurrentMonth() << " zl\n\n";
+        cout << "Calkowita kwota wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserCurrentMonth() << " zl\n\n";
     }
 }
 
@@ -106,7 +105,7 @@ void ExpenseManager::showAllExpensesOfLoggedUserPreviousMonth() {
                 showExpenseDetails(*itr);
             }
         }
-        cout << "Calkowita wysokosc wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserPreviousMonth() << " zl\n\n";
+        cout << "Calkowita kwota wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserPreviousMonth() << " zl\n\n";
     }
 }
 
@@ -146,6 +145,6 @@ void ExpenseManager::showAllExpensesOfLoggedUserTimePeroid(string dateStart, str
                 showExpenseDetails(*itr);
             }
         }
-        cout << "Calkowita wysokosc wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserTimePeroid(dateStart, dateEnd) << " zl\n\n";
+        cout << "Calkowita kwota wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserTimePeroid(dateStart, dateEnd) << " zl\n\n";
     }
 }

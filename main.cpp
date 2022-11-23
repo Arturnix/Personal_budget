@@ -1,33 +1,23 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "UserManager.h"
-#include "OtherMethods.h"
-#include "IncomeManager.h"
-#include "ExpenseManager.h"
-#include "Date.h"
+#include "BudgetManager.h"
 
 using namespace std;
 
 int main()
 {
-    UserManager user("users.xml");
-    IncomeManager* income;
-    ExpenseManager* expense;
+    BudgetManager budgetManager("users.xml", "incomes.xml", "expenses.xml");
 
     while (true) {
-        if (!user.isUserLoggedIn()) {
+        if (!budgetManager.isUserLoggedIn()) {
 
-            switch (OtherMethods::choseFromMainMenu()) {
+            switch (budgetManager.menuInterface()) {
             case '1':
-                user.userRegistration();
+                budgetManager.userRegistration();
                 break;
             case '2':
-                user.userLogging();
-                if (user.isUserLoggedIn()) {
-                    income = new IncomeManager ("incomes.xml", user.getLoggedUserId());
-                    expense = new ExpenseManager ("expenses.xml", user.getLoggedUserId());
-                }
+                budgetManager.userLogging();
                 break;
             case '3':
                 exit(0);
@@ -39,34 +29,30 @@ int main()
             }
         } else {
 
-            switch (OtherMethods::choseFromUserMenu()) {
+            switch (budgetManager.menuInterface()) {
             case '1':
-                income -> addIncome();
+                budgetManager.addIncome();
                 break;
             case '2':
-                expense -> addExpense();
+                budgetManager.addExpense();
                 break;
             case '3':
-                income -> showAllIncomesOfLoggedUserCurrentMonth();
-                system("pause");
+                budgetManager.showFinancialBalanceCurrentMonth();
                 break;
             case '4':
-                income -> showAllIncomesOfLoggedUserPreviousMonth();
-                system("pause");
+                budgetManager.showFinancialBalancePreviousMonth();
                 break;
             case '5':
-                income -> setTimePeroidToShowFinancialBalance();
-                system("pause");
+                budgetManager.showFinancialBalanceTimePeroid();
                 break;
             case '6':
-                user.changePasswordOfLoggedUser();
+                budgetManager.changePasswordOfLoggedUser();
                 break;
             case '7':
-                user.logoutUser();
+                budgetManager.logoutUser();
                 break;
             }
         }
     }
-
     return 0;
 }

@@ -80,7 +80,7 @@ void IncomeManager::showAllIncomesOfLoggedUserCurrentMonth() {
                 showIncomeDetails(*itr);
             }
         }
-        cout << "Calkowity przychod w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserCurrentMonth() << " zl\n\n";
+        cout << "Calkowita kwota przychodow w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserCurrentMonth() << " zl\n\n";
     }
 }
 
@@ -106,7 +106,7 @@ void IncomeManager::showAllIncomesOfLoggedUserPreviousMonth() {
                 showIncomeDetails(*itr);
             }
         }
-        cout << "Calkowity przychod w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserPreviousMonth() << " zl\n\n";
+        cout << "CCalkowita kwota przychodow w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserPreviousMonth() << " zl\n\n";
     }
 }
 
@@ -146,6 +146,6 @@ void IncomeManager::showAllIncomesOfLoggedUserTimePeroid(string dateStart, strin
                 showIncomeDetails(*itr);
             }
         }
-        cout << "Calkowity przychod w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserTimePeroid(dateStart, dateEnd) << " zl\n\n";
+        cout << "Calkowita kwota przychodow w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserTimePeroid(dateStart, dateEnd) << " zl\n\n";
     }
 }
