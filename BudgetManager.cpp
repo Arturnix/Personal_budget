@@ -48,6 +48,11 @@ void BudgetManager::addExpense() {
     }
 }
 
+void BudgetManager::displayBalanceTitle() {
+    cout << "Bilans: " << endl;
+    cout << "---------------------------------------" << endl;
+}
+
 float BudgetManager::calculateFinancialBalanceCurrentMonth () {
 
     float totalFinancialBalance = 0.00;
@@ -61,6 +66,7 @@ void BudgetManager::showFinancialBalanceCurrentMonth() {
     } else {
         incomeManager -> showAllIncomesOfLoggedUserCurrentMonth();
         expenseManager -> showAllExpensesOfLoggedUserCurrentMonth();
+        displayBalanceTitle();
         cout << "Bilans finansowy w danym okresie: " << fixed << setprecision(2) <<
              calculateFinancialBalanceCurrentMonth() << " zl\n\n";
     }
@@ -81,6 +87,7 @@ void BudgetManager::showFinancialBalancePreviousMonth() {
     } else {
         incomeManager -> showAllIncomesOfLoggedUserPreviousMonth();
         expenseManager -> showAllExpensesOfLoggedUserPreviousMonth();
+        displayBalanceTitle();
         cout << "Bilans finansowy w danym okresie: " << fixed << setprecision(2) <<
              calculateFinancialBalancePreviousMonth () << " zl\n\n";
     }
@@ -110,6 +117,7 @@ void BudgetManager::showFinancialBalanceTimePeroid() {
 
         incomeManager -> showAllIncomesOfLoggedUserTimePeroid(dateStart, dateEnd);
         expenseManager -> showAllExpensesOfLoggedUserTimePeroid(dateStart, dateEnd);
+        displayBalanceTitle();
         cout << "Bilans finansowy w danym okresie: " << fixed << setprecision(2) <<
              calculateFinancialBalanceTimePeroid(dateStart, dateEnd) << " zl\n\n";
     }

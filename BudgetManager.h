@@ -21,6 +21,7 @@ class BudgetManager {
     float calculateFinancialBalanceCurrentMonth();
     float calculateFinancialBalancePreviousMonth();
     float calculateFinancialBalanceTimePeroid (string dateStart, string dateEnd);
+    void displayBalanceTitle();
 
 public:
     BudgetManager(string nameFileWithUsers, string nameFileWithIncomes, string nameFileWithExpenses)
