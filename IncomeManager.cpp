@@ -15,7 +15,7 @@ void IncomeManager::addIncome () {
 Income IncomeManager::enterDataOfNewIncome () {
     Income income;
 
-    income.setIncomeId(getNewIncomeId());
+    income.setIncomeId(FileWithIncomes::setLastIncomeId());
     income.setUserId(LOGGED_USER_ID);
 
     cout << "Podaj date przychodu. " << endl;
@@ -28,13 +28,6 @@ Income IncomeManager::enterDataOfNewIncome () {
     income.setAmount(OtherMethods::getFloatNumberForCashAmount());
 
     return income;
-}
-
-int IncomeManager::getNewIncomeId() {
-    if (incomes.empty() == true)
-        return 1;
-    else
-        return incomes.back().getIncomeId() + 1;
 }
 
 vector<Income> IncomeManager::sortVectorByDate (vector<Income>& incomes) {
@@ -106,20 +99,8 @@ void IncomeManager::showAllIncomesOfLoggedUserPreviousMonth() {
                 showIncomeDetails(*itr);
             }
         }
-        cout << "CCalkowita kwota przychodow w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserPreviousMonth() << " zl\n\n";
+        cout << "Calkowita kwota przychodow w danym okresie: " << fixed << setprecision(2) << totalIncomesOfLoggedUserPreviousMonth() << " zl\n\n";
     }
-}
-
-void IncomeManager::setTimePeroidToShowFinancialBalance () {
-    string dateStart = "",  dateEnd = "";
-
-    cout << "Podaj poczatek okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
-    dateStart = Date::inputDateForTimePeroid();
-
-    cout << "Podaj koniec okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
-    dateEnd = Date::inputDateForTimePeroid();
-
-    showAllIncomesOfLoggedUserTimePeroid(dateStart, dateEnd);
 }
 
 float IncomeManager::totalIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd) {

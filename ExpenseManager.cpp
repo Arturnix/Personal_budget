@@ -15,7 +15,7 @@ void ExpenseManager::addExpense () {
 Expense ExpenseManager::enterDataOfNewExpense () {
     Expense expense;
 
-    expense.setExpenseId(getNewExpenseId());
+    expense.setExpenseId(FileWithExpenses::setLastExpenseId());
     expense.setUserId(LOGGED_USER_ID);
 
     cout << "Podaj date wydatku. " << endl;
@@ -28,13 +28,6 @@ Expense ExpenseManager::enterDataOfNewExpense () {
     expense.setAmount(OtherMethods::getFloatNumberForCashAmount());
 
     return expense;
-}
-
-int ExpenseManager::getNewExpenseId() {
-    if (expenses.empty() == true)
-        return 1;
-    else
-        return expenses.back().getExpenseId() + 1;
 }
 
 vector<Expense> ExpenseManager::sortVectorByDate (vector<Expense>& expenses) {
@@ -107,18 +100,6 @@ void ExpenseManager::showAllExpensesOfLoggedUserPreviousMonth() {
         }
         cout << "Calkowita kwota wydatkow w danym okresie: " << fixed << setprecision(2) << totalExpensesOfLoggedUserPreviousMonth() << " zl\n\n";
     }
-}
-
-void ExpenseManager::setTimePeroidToShowFinancialBalance () {
-    string dateStart = "",  dateEnd = "";
-
-    cout << "Podaj poczatek okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
-    dateStart = Date::inputDateForTimePeroid();
-
-    cout << "Podaj koniec okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
-    dateEnd = Date::inputDateForTimePeroid();
-
-    showAllExpensesOfLoggedUserTimePeroid(dateStart, dateEnd);
 }
 
 float ExpenseManager::totalExpensesOfLoggedUserTimePeroid (string dateStart, string dateEnd) {

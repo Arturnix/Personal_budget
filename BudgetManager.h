@@ -18,17 +18,21 @@ class BudgetManager {
     ExpenseManager* expenseManager;
     const string NAME_FILE_WITH_EXPENSES;
 
+    float calculateFinancialBalanceCurrentMonth();
+    float calculateFinancialBalancePreviousMonth();
+    float calculateFinancialBalanceTimePeroid (string dateStart, string dateEnd);
+
 public:
     BudgetManager(string nameFileWithUsers, string nameFileWithIncomes, string nameFileWithExpenses)
-    : userManager (nameFileWithUsers), NAME_FILE_WITH_INCOMES(nameFileWithIncomes), NAME_FILE_WITH_EXPENSES(nameFileWithExpenses) {
-    incomeManager = NULL;
-    expenseManager = NULL;
+        : userManager (nameFileWithUsers), NAME_FILE_WITH_INCOMES(nameFileWithIncomes), NAME_FILE_WITH_EXPENSES(nameFileWithExpenses) {
+        incomeManager = NULL;
+        expenseManager = NULL;
     };
     ~BudgetManager() {
-    delete incomeManager;
-    incomeManager = NULL;
-    delete expenseManager;
-    expenseManager = NULL;
+        delete incomeManager;
+        incomeManager = NULL;
+        delete expenseManager;
+        expenseManager = NULL;
     };
     void userRegistration();
     void userLogging();
@@ -41,7 +45,6 @@ public:
     void showFinancialBalancePreviousMonth();
     void showFinancialBalanceTimePeroid();
     char menuInterface();
-
 };
 
 #endif // BUDGETMANAGER_H

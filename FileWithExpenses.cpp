@@ -17,7 +17,7 @@ void FileWithExpenses::addExpenseToFile (Expense expense) {
     xml.IntoElem();
     xml.AddElem("ExpenseId", expense.getExpenseId());
     xml.AddElem("UserId", expense.getUserId());
-    xml.AddElem("Date", expense.getDate());
+    xml.AddElem("Date", Date::stringDateWithSeparators(expense.getDate()));
     xml.AddElem("Item", expense.getItem());
     xml.AddElem("Amount", OtherMethods::convertFloatToString(expense.getAmount()));
 
@@ -55,4 +55,23 @@ vector<Expense> FileWithExpenses::loadExpensesFromFile(int loggedUserId) {
         xml.OutOfElem();
     }
     return expenses;
+}
+
+int FileWithExpenses::setLastExpenseId() {
+
+    int lastExpenseId = 0;
+
+    CMarkup xml;
+
+    xml.Load( "expenses.xml" );
+
+    xml.FindElem();
+    xml.IntoElem();
+    while ( xml.FindElem("Expense") ) {
+        xml.IntoElem();
+        xml.FindElem("ExpenseId");
+        lastExpenseId = atoi(MCD_2PCSZ(xml.GetData()));
+        xml.OutOfElem();
+    }
+    return lastExpenseId+1;
 }

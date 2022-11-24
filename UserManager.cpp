@@ -49,10 +49,10 @@ bool UserManager::doesLoginExist(string login) {
     return false;
 }
 
-void UserManager::userLogging() {
+void UserManager::loggingProcedure() {
+
     User user;
     string login = "", password = "";
-
     cout << endl << "Podaj login: ";
     login = OtherMethods::getLine();
 
@@ -65,20 +65,30 @@ void UserManager::userLogging() {
 
                 if (itr -> getPassword() == password) {
                     loggedUserId = itr -> getUserId();
-                    cout << endl << "Zalogowales sie." << endl << endl;
+                    cout << endl << "Zalogowales sie.\n\n";
                     system("pause");
                     return;
                 }
             }
-            cout << "Wprowadzono 3 razy bledne haslo." << endl;
+            cout << "Wprowadzono 3 razy bledne haslo.\n";
             system("pause");
             return;
         }
         itr++;
     }
-    cout << "Nie ma uzytkownika z takim loginem" << endl << endl;
+    cout << "Nie ma uzytkownika z takim loginem!\n\n";
     system("pause");
     return;
+}
+
+void UserManager::userLogging() {
+
+    if (users.size() != 0) {
+        loggingProcedure();
+    } else {
+        cout << "Brak zarejestrowanych uzytkownikow! Nie mozna sie zalogowac.\n\n";
+        system("pause>0");
+    }
 }
 
 bool UserManager::isUserLoggedIn() {

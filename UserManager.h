@@ -20,6 +20,7 @@ class UserManager {
     User enterDataOfNewUser();
     int getNewUserId();
     bool doesLoginExist(string login);
+    void loggingProcedure();
 
 public:
     UserManager(string fileName, int LOGGED_USER_ID = 0)

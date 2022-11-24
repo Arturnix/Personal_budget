@@ -18,6 +18,7 @@ public:
     FileWithIncomes (string fileName) : DataFile (fileName) {};
     void addIncomeToFile (Income income);
     vector<Income> loadIncomesFromFile (int loggedUserId);
+    static int setLastIncomeId();
 };
 
 #endif // FILEWITHINCOMES_H

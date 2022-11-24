@@ -23,22 +23,20 @@ class IncomeManager {
     vector<Income> sortVectorByDate (vector<Income>& incomes);
     void displayIncomesTitle ();
     void showIncomeDetails (Income income);
-    float totalIncomesOfLoggedUserCurrentMonth ();
-    float totalIncomesOfLoggedUserPreviousMonth ();
-    float totalIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
-    void showAllIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
-
 
 public:
     IncomeManager (string fileName, int loggedUserId)
-    : fileWithIncomes(fileName), LOGGED_USER_ID(loggedUserId) {
-    incomes = fileWithIncomes.loadIncomesFromFile(loggedUserId);
+        : fileWithIncomes(fileName), LOGGED_USER_ID(loggedUserId) {
+        incomes = fileWithIncomes.loadIncomesFromFile(loggedUserId);
     };
 
     void addIncome ();
     void showAllIncomesOfLoggedUserCurrentMonth();
     void showAllIncomesOfLoggedUserPreviousMonth();
-    void setTimePeroidToShowFinancialBalance ();
+    float totalIncomesOfLoggedUserCurrentMonth ();
+    float totalIncomesOfLoggedUserPreviousMonth ();
+    float totalIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
+    void showAllIncomesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
 };
 
 #endif // INCOMEMANAGER_H

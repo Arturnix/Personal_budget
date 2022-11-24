@@ -23,21 +23,20 @@ class ExpenseManager {
     vector<Expense> sortVectorByDate (vector<Expense>& expenses);
     void displayExpensesTitle ();
     void showExpenseDetails (Expense expense);
-    float totalExpensesOfLoggedUserCurrentMonth ();
-    float totalExpensesOfLoggedUserPreviousMonth ();
-    float totalExpensesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
-    void showAllExpensesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
 
 public:
     ExpenseManager (string fileName, int loggedUserId)
-    : fileWithExpenses(fileName), LOGGED_USER_ID(loggedUserId) {
-    expenses = fileWithExpenses.loadExpensesFromFile(loggedUserId);
+        : fileWithExpenses(fileName), LOGGED_USER_ID(loggedUserId) {
+        expenses = fileWithExpenses.loadExpensesFromFile(loggedUserId);
     };
 
     void addExpense ();
     void showAllExpensesOfLoggedUserCurrentMonth();
     void showAllExpensesOfLoggedUserPreviousMonth();
-    void setTimePeroidToShowFinancialBalance ();
+    float totalExpensesOfLoggedUserCurrentMonth ();
+    float totalExpensesOfLoggedUserPreviousMonth ();
+    float totalExpensesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
+    void showAllExpensesOfLoggedUserTimePeroid (string dateStart, string dateEnd);
 };
 
 #endif // EXPENSEMANAGER_H

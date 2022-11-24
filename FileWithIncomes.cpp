@@ -56,3 +56,22 @@ vector<Income> FileWithIncomes::loadIncomesFromFile(int loggedUserId) {
     }
     return incomes;
 }
+
+int FileWithIncomes::setLastIncomeId() {
+
+    int lastIncomeId = 0;
+
+    CMarkup xml;
+
+    xml.Load( "incomes.xml" );
+
+    xml.FindElem();
+    xml.IntoElem();
+    while ( xml.FindElem("Income") ) {
+        xml.IntoElem();
+        xml.FindElem("IncomeId");
+        lastIncomeId = atoi(MCD_2PCSZ(xml.GetData()));
+        xml.OutOfElem();
+    }
+    return lastIncomeId+1;
+}

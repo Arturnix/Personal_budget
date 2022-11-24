@@ -14,6 +14,13 @@ class Expense {
     float amount;
 
 public:
+    Expense (int expenseId = 0, int userId = 0, int date = 0, string item = "", float amount = 0.00) {
+        this -> expenseId = expenseId;
+        this -> userId = userId;
+        this -> date = date;
+        this -> item = item;
+        this -> amount = amount;
+    };
 
     void setExpenseId (int newExpenseId);
     void setUserId (int newUserId);

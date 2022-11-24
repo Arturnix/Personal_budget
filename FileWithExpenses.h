@@ -18,6 +18,7 @@ public:
     FileWithExpenses (string fileName) : DataFile (fileName) {};
     void addExpenseToFile (Expense expense);
     vector<Expense> loadExpensesFromFile (int loggedUserId);
+    static int setLastExpenseId();
 };
 
 #endif // FILEWITHEXPENSES_H
