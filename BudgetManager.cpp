@@ -108,12 +108,13 @@ void BudgetManager::showFinancialBalanceTimePeroid() {
         cout << "Aby wyswielic bilans nalezy sie najpierw zalogowac!\n\n";
     } else {
         string dateStart = "",  dateEnd = "";
-
+        do {
         cout << "Podaj poczatek okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
         dateStart = Date::inputDateForTimePeroid();
 
         cout << "Podaj koniec okresu, dla ktorego ma zostac wyswietlony bilans (w formacie rrrr-mm-dd):  \n";
         dateEnd = Date::inputDateForTimePeroid();
+        } while (!Date::compareDates(dateStart, dateEnd));
 
         incomeManager -> showAllIncomesOfLoggedUserTimePeroid(dateStart, dateEnd);
         expenseManager -> showAllExpensesOfLoggedUserTimePeroid(dateStart, dateEnd);

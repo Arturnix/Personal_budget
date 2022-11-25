@@ -12,7 +12,7 @@ using namespace std;
 class Date {
 
     static bool isLeapYear (int year);
-    static int howManyDaysInMonth(int month);
+    static int howManyDaysInMonth(int month, int userYear);
     static bool isYearCorrect(string userDate);
     static bool isMonthCorrect (string userDate);
     static bool isDayCorrect (string userDate);
@@ -35,6 +35,7 @@ public:
     static bool dateValidationForPreviousMonthFinancialBalance (string userDate);
     static bool startDateValidationForTimePeroidFinancialBalance (string dateStart, int dateFromVector);
     static bool endDateValidationForTimePeroidFinancialBalance (string dateEnd, int dateFromVector);
+    static bool compareDates(string dateStart, string dateEnd);
 };
 
 #endif // DATE_H

@@ -67,7 +67,7 @@ bool Date::isLeapYear (int year) {
     }
 }
 
-int Date::howManyDaysInMonth(int month) {
+int Date::howManyDaysInMonth(int month, int userYear) {
 
     int daysInMonth = 0;
 
@@ -75,7 +75,7 @@ int Date::howManyDaysInMonth(int month) {
         daysInMonth = 30;
     } else if (month == 2) {
 
-        !isLeapYear(getCurrentYear()) ? daysInMonth = 28 : daysInMonth = 29;
+        !isLeapYear(userYear) ? daysInMonth = 28 : daysInMonth = 29;
     } else {
         daysInMonth = 31;
     }
@@ -146,8 +146,9 @@ bool Date::isDayCorrect (string userDate) {
 
     int userDay = atoi(getDayFromInputDate(userDate).c_str());
     int userMonth = atoi(getMonthFromInputDate(userDate).c_str());
+    int userYear = atoi(getYearFromInputDate(userDate).c_str());
 
-    if ((userDay >= 1) && (userDay <= howManyDaysInMonth(userMonth))) {
+    if ((userDay >= 1) && (userDay <= howManyDaysInMonth(userMonth, userYear))) {
         return true;
     } else {
         return false;
@@ -286,6 +287,28 @@ bool Date::endDateValidationForTimePeroidFinancialBalance (string dateEnd, int d
     if (dateFromVector <= intUserDateToValidateEnd) {
         return true;
     } else {
+        return false;
+    }
+}
+
+bool Date::compareDates(string dateStart, string dateEnd) {
+
+    string stringUserDateToValidateStart = getYearFromInputDate(dateStart);
+    stringUserDateToValidateStart += getMonthFromInputDate(dateStart);
+    stringUserDateToValidateStart += getDayFromInputDate(dateStart);
+
+    int intUserDateToValidateStart = atoi(stringUserDateToValidateStart.c_str());
+
+    string stringUserDateToValidateEnd = getYearFromInputDate(dateEnd);
+    stringUserDateToValidateEnd += getMonthFromInputDate(dateEnd);
+    stringUserDateToValidateEnd += getDayFromInputDate(dateEnd);
+
+    int intUserDateToValidateEnd = atoi(stringUserDateToValidateEnd.c_str());
+
+    if (intUserDateToValidateStart <= intUserDateToValidateEnd) {
+        return true;
+    } else {
+        cout << "Koniec przedzialu to data wczesniejsza niz poczatek! Podaj daty jeszcze raz.\n\n";
         return false;
     }
 }
